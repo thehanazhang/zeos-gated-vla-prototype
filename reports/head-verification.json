@@ -1,0 +1,24 @@
+{
+  "scope": "Independent action head on synthetic conditioning/actions; not pretrained Gemma or recorded-action training",
+  "gpu": "NVIDIA L40S",
+  "feature_shape": [
+    4,
+    1024,
+    2560
+  ],
+  "chunk_shape": [
+    1,
+    16,
+    7
+  ],
+  "training_iterations": 30,
+  "training_seconds": 0.9527712230000001,
+  "head_inference_seconds": 0.06684060699999961,
+  "loss_first": 2.519824743270874,
+  "loss_last": 1.9668371677398682,
+  "all_gradients_finite": true,
+  "peak_allocated_bytes": 165560320,
+  "peak_reserved_bytes": 201326592,
+  "real_zeos_allow": true,
+  "real_zeos_veto": true
+}

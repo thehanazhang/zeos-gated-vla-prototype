@@ -1,0 +1,12 @@
+{
+  "stage": "pretrained_gemma_verification",
+  "status": "blocked",
+  "model_id": "google/gemma-3-4b-it",
+  "model_revision": "093f9f388b31de276ce2de164bdc2081324b9767",
+  "http_status": 403,
+  "error": "Hugging Face gated repository: account not in authorized list",
+  "modal_run_id": "ap-7ndGXn0b2Qm0mMU39IbRIX",
+  "gpu_memory_measured": false,
+  "generation_latency_measured": false,
+  "recorded_feature_training_complete": false
+}

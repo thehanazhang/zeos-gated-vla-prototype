@@ -1,0 +1,14 @@
+{
+  "dataset_id": "thehanazhang/b601_rs_manipulate_package_v3_150",
+  "dataset_revision": "d18511446db55a41bf3ae5d1ded06d05ddbbd835",
+  "camera_key": "observation.images.wrist",
+  "proprio_key": "observation.state",
+  "action_key": "action",
+  "horizon": 16,
+  "fps": 30,
+  "instruction": "Manipulate the package of mini Maltesers slowly.",
+  "train_episodes": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+  "validation_episodes": [12, 13, 14],
+  "frames_per_episode": 8,
+  "action_units": "recorded LeRobot units; physical mapping not verified"
+}

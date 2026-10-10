@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+cache/
+checkpoints/
+artifacts/
+*.pt
+.env
+
+reports/dataset-sample.png

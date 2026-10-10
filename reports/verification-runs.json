@@ -24,6 +24,16 @@
     "demo": {
       "run": "https://modal.com/apps/thehanazhang/main/ap-0ErgRuq36eQXP9ABQroXXD",
       "report": "demo-verification.json"
+    },
+    "isaac_replay_first_pass": {
+      "run": "https://modal.com/apps/thehanazhang/main/ap-SttPRimgEMqgirihm3TlzF",
+      "report": "STATUS.md",
+      "scope": "Recorded-output replay, PhysX, illustrative bounded display scaling; no live VLM in Isaac"
+    },
+    "isaac_replay_measured": {
+      "run": "https://modal.com/apps/thehanazhang/main/ap-wjbNfT3IoBPwJXxWfKpU1K",
+      "report": "isaac-replay/report.json",
+      "source_matches_complete_demo": true
     }
   },
   "versions": {
@@ -33,7 +43,9 @@
     "lerobot": "0.6.1",
     "huggingface_hub": "1.31.0",
     "modal": "1.4.3",
-    "zeos_commit": "36aaeafbe185530f0c33a9e049745bbb1b3ba3bd"
+    "zeos_commit": "36aaeafbe185530f0c33a9e049745bbb1b3ba3bd",
+    "isaacsim_separate_environment": "6.1.0.0",
+    "isaac_torch": "2.11.0"
   },
   "checkpoint": {
     "local_path": "checkpoints/package.pt",

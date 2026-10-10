@@ -1,5 +1,5 @@
 {
-  "tests_passed": 23,
+  "tests_passed": 25,
   "test_scope": "Offline unit/integration contracts; genuine tiny random Gemma4; real ZEOS kernel; synthetic training/checkpoint fixtures",
   "python": "3.12.13",
   "platform": "macOS arm64",
@@ -7,5 +7,11 @@
   "transformers": "5.19.0",
   "pretrained_gemma4_verified": true,
   "complete_pretrained_allow_veto_verified": true,
-  "feature_cache_live_exact_verified": true
+  "feature_cache_live_exact_verified": true,
+  "latest_local_result": "25 passed in 2.47s",
+  "display_mapping_checks": [
+    "invalid shape/nonfinite input rejected",
+    "neutral preserved",
+    "targets clipped to URDF limits"
+  ]
 }

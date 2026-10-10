@@ -1,0 +1,14 @@
+{
+  "isaacsim_version": "6.1.0.0",
+  "headless_started": true,
+  "hardware_tested": false,
+  "physical_calibration_verified": false,
+  "startup_seconds": 40.307399962999995,
+  "completed": false,
+  "error": "Traceback (most recent call last):\n  File \"/scripts/isaac_worker.py\", line 52, in main\n    report.update(replay(simulation, stage, args))\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/scripts/isaac_worker.py\", line 141, in replay\n    raise ValueError(f\"Expected one articulation root; found {roots}\")\nValueError: Expected one articulation root; found []\n",
+  "elapsed_before_shutdown_seconds": 165.156712093,
+  "gpu": "NVIDIA L40S, 610.57.04, 2597 MiB",
+  "shutdown_mode": "documented close(skip_cleanup=True) immediate exit",
+  "process_returncode": 1,
+  "function_elapsed_seconds": 167.877886856
+}

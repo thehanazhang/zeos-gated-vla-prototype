@@ -1,0 +1,14 @@
+{
+  "isaacsim_version": "6.1.0.0",
+  "headless_started": true,
+  "usd_stage_created": true,
+  "updates": 10,
+  "startup_and_updates_seconds": 27.215667597,
+  "gpu": "NVIDIA L40S, 580.95.05, 623 MiB",
+  "b601_imported": false,
+  "physical_calibration_verified": false,
+  "clean_shutdown": false,
+  "process_returncode": 134,
+  "shutdown_error": "carb::tasking::TaskGroup::~TaskGroup(): Destroying busy TaskGroup",
+  "run_id": "ap-JEQwUAORV3YyK2rJ1WQksK"
+}

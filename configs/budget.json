@@ -1,0 +1,19 @@
+{
+  "approved_training_budget_usd": 25.0,
+  "actual_billed_spend_usd": null,
+  "pricing_source": "https://modal.com/pricing",
+  "pricing_checked": "2026-10-11",
+  "l40s_usd_per_second": 0.000542,
+  "cpu_core_usd_per_second": 1.31e-05,
+  "memory_gib_usd_per_second": 2.22e-06,
+  "planning_reservations_usd": {
+    "completed_prototype_allowance_not_actual_billing": 5.0,
+    "isaac_platform_probe_allowance": 1.0,
+    "first_isaac_install_and_startup_allowance": 3.0
+  },
+  "unreserved_budget_usd": 16.0,
+  "policy": "Reservations are conservative planning allocations, not invoices. Reconcile actual or bounded project usage before additional training. No persistent GPU services; explicit timeouts and short scale-down. Keep all additional project compute conservatively within the training ceiling.",
+  "planning_function_compute_estimate_usd": 1.6337,
+  "estimate_report": "reports/compute-budget-estimate.json",
+  "all_project_apps_stopped": true
+}

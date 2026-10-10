@@ -1,0 +1,171 @@
+{
+  "actual_billed_spend_usd": null,
+  "listed_project_apps": [
+    {
+      "App ID": "ap-wjbNfT3IoBPwJXxWfKpU1K",
+      "Description": "zeos-vla-isaac",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 01:40:50+11:00",
+      "Stopped at": "2026-10-11 01:44:34+11:00"
+    },
+    {
+      "App ID": "ap-SttPRimgEMqgirihm3TlzF",
+      "Description": "zeos-vla-isaac",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 01:35:58+11:00",
+      "Stopped at": "2026-10-11 01:39:31+11:00"
+    },
+    {
+      "App ID": "ap-191CpdHGqVZdsaWQNTv9Rc",
+      "Description": "zeos-vla-isaac",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 01:31:34+11:00",
+      "Stopped at": "2026-10-11 01:34:47+11:00"
+    },
+    {
+      "App ID": "ap-Au6vf8PSUvQjmBiCwuLXhq",
+      "Description": "zeos-vla-isaac",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 01:28:57+11:00",
+      "Stopped at": "2026-10-11 01:30:19+11:00"
+    },
+    {
+      "App ID": "ap-hAr2JjeO3fwh7GyClgWiAW",
+      "Description": "zeos-vla-isaac",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 01:24:20+11:00",
+      "Stopped at": "2026-10-11 01:27:45+11:00"
+    },
+    {
+      "App ID": "ap-JEQwUAORV3YyK2rJ1WQksK",
+      "Description": "zeos-vla-isaac",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 01:13:14+11:00",
+      "Stopped at": "2026-10-11 01:21:48+11:00"
+    },
+    {
+      "App ID": "ap-IYVOYLVa8MHmslhSWj3hfQ",
+      "Description": "zeos-vla-isaac-probe",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 01:09:37+11:00",
+      "Stopped at": "2026-10-11 01:10:03+11:00"
+    },
+    {
+      "App ID": "ap-0ErgRuq36eQXP9ABQroXXD",
+      "Description": "zeos-vla-research",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 01:01:12+11:00",
+      "Stopped at": "2026-10-11 01:01:53+11:00"
+    },
+    {
+      "App ID": "ap-I24gy4Dcx7QiXGjvlnmsFr",
+      "Description": "zeos-vla-research",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 00:59:10+11:00",
+      "Stopped at": "2026-10-11 01:00:52+11:00"
+    },
+    {
+      "App ID": "ap-3Gc2PVw17NkcQmfIsZM3ws",
+      "Description": "zeos-vla-research",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 00:57:46+11:00",
+      "Stopped at": "2026-10-11 00:58:43+11:00"
+    },
+    {
+      "App ID": "ap-K6uAr4o6R2YErkCSmMmC3D",
+      "Description": "zeos-vla-research",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 00:56:48+11:00",
+      "Stopped at": "2026-10-11 00:57:22+11:00"
+    },
+    {
+      "App ID": "ap-nexB7MO3OKY2O1mvkq3Fe5",
+      "Description": "zeos-vla-research",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 00:56:05+11:00",
+      "Stopped at": "2026-10-11 00:56:22+11:00"
+    },
+    {
+      "App ID": "ap-FFFrd6gu8D8a8HveAjhMPu",
+      "Description": "zeos-vla-research",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 00:50:39+11:00",
+      "Stopped at": "2026-10-11 00:55:32+11:00"
+    },
+    {
+      "App ID": "ap-9Vt83YCtHSEDiofagEQUAE",
+      "Description": "zeos-vla-research",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 00:37:59+11:00",
+      "Stopped at": "2026-10-11 00:38:13+11:00"
+    },
+    {
+      "App ID": "ap-TEr8TBvShUHVndyGDcP9h2",
+      "Description": "zeos-vla-research",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 00:34:16+11:00",
+      "Stopped at": "2026-10-11 00:36:49+11:00"
+    },
+    {
+      "App ID": "ap-bQyBlv83Vwyz4ayZLOrqDP",
+      "Description": "zeos-vla-research",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 00:31:46+11:00",
+      "Stopped at": "2026-10-11 00:32:08+11:00"
+    },
+    {
+      "App ID": "ap-JLBbJsUaXdPQTxGmqFp3RR",
+      "Description": "zeos-vla-research",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 00:27:24+11:00",
+      "Stopped at": "2026-10-11 00:29:28+11:00"
+    },
+    {
+      "App ID": "ap-7ndGXn0b2Qm0mMU39IbRIX",
+      "Description": "zeos-vla-research",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 00:22:41+11:00",
+      "Stopped at": "2026-10-11 00:22:59+11:00"
+    },
+    {
+      "App ID": "ap-1JFLO7HiUg6RimGW1tE0Gz",
+      "Description": "zeos-vla-research",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 00:20:21+11:00",
+      "Stopped at": "2026-10-11 00:22:12+11:00"
+    },
+    {
+      "App ID": "ap-lVRF22Ckh6fq4jEgk3Ezaa",
+      "Description": "zeos-vla-dataset-inspection",
+      "State": "stopped",
+      "Tasks": "0",
+      "Created at": "2026-10-11 00:21:08+11:00",
+      "Stopped at": "2026-10-11 00:21:20+11:00"
+    }
+  ],
+  "all_project_apps_stopped": true,
+  "total_app_lifetime_seconds": 2455.0,
+  "planning_function_compute_estimate_usd": 1.6337,
+  "assumptions": "Every listed app lifetime second charged as one L40S, four CPU cores and 32 GiB RAM, including image-build wait. This is a planning estimate, not actual metered usage or an invoice; separate storage/build billing is not measured. Functions ran serially within each listed app.",
+  "pricing_source": "https://modal.com/pricing",
+  "pricing_date": "2026-10-11"
+}

@@ -1,6 +1,6 @@
 # Verification status — 11 October 2026
 
-The full Approach A prototype was executed on Modal: frozen pretrained `google/gemma-4-E4B-it`, a head trained on the user's recorded actions, the unmodified real ZEOS kernel, and a joint-state simulator. All six ordered GPU/data stages passed. No Isaac Sim or hardware success is claimed.
+The full Approach A prototype was executed on Modal: frozen pretrained `google/gemma-4-E4B-it`, a head trained on the user's recorded actions, the unmodified real ZEOS kernel, and a joint-state simulator. All six ordered GPU/data stages passed. Isaac Sim B601 articulation replay also passed separately; no hardware success is claimed.
 
 | Component | Executed evidence | Status |
 |---|---|---|
@@ -15,10 +15,10 @@ The full Approach A prototype was executed on Modal: frozen pretrained `google/g
 | Failure closed | Malformed verdict, timeout, guard crash, early exit, invalid command and nonfinite prediction | Passed |
 | Complete allow | Same Gemma proposal authorized; head called; one 16-step chunk dispatched; final joint-state delta norm 9.82968 in recorded units | Passed |
 | Complete veto | Head skipped; zero chunks/steps dispatched; denial feedback sent to the same Gemma instance | Passed |
-| Isaac Sim | No B601 geometry, verified conversion or contact scene available | Not run |
+| Isaac Sim replay | Real 6.1.0.0 / PhysX; manufacturer URDF; fresh ZEOS gates; allow 16 targets and measured motion, veto 0 targets and 0 drift | Passed with illustrative scaling |
 | Robot hardware | No hardware accessed | Not run |
 
-23 local tests passed on Python 3.12.13 / macOS arm64 with Transformers 5.19.0. The unit suite uses tiny random model weights and synthetic fixtures where appropriate; the separate cloud reports establish pretrained and recorded-data execution.
+25 local tests passed on Python 3.12.13 / macOS arm64 with Transformers 5.19.0. The unit suite uses tiny random model weights and synthetic fixtures where appropriate; the separate cloud reports establish pretrained and recorded-data execution.
 
 ## Measured GPU evidence
 
@@ -47,3 +47,13 @@ The simulator applies joint targets in the dataset's original units. It does not
 See README for installation and the six ordered Modal commands. `verification-runs.json` records run URLs, pinned versions and the downloaded checkpoint checksum. `demo-verification.json` contains actual action values and the full real-kernel journals for both branches. The trained checkpoint is retained at `checkpoints/package.pt` locally and in the `zeos-vla-research` Modal volume; weights and private sample images are excluded from Git and can be downloaded using the documented commands.
 
 `gemma-access-failure.json` is historical: the initially specified gated Gemma 3 download returned HTTP 403. The user changed the backbone to public Gemma 4 E4B, which passed all pretrained stages. No current Gemma-access blocker remains.
+
+## Isaac Sim replay evidence
+
+`isaac-replay/report.json` records the independent real Isaac articulation replay. It uses the already generated Gemma/head chunk from the complete demo (source SHA256 included) and fresh real ZEOS gates. The user explicitly deferred physical calibration. Six arm deltas receive arbitrary display scaling; one gripper delta moves two sliders within their model limits. The base is fixed, gravity is zero, and red package cubes are static props. No live Gemma camera loop or package manipulation success was tested in Isaac.
+
+First successful replay run `ap-SttPRimgEMqgirihm3TlzF`: startup 44.899 s; import/setup 124.327 s; veto replay/render 7.037 s and exactly zero joint drift; allow replay/render 9.598 s with 16 trajectory targets and maximum observed DOF change 0.25991. Whole worker before shutdown 193.218 s. End-of-run device memory snapshot 2,775 MiB on L40S / driver 610.57.04; this snapshot is not a measured peak. The follow-up run is complete.
+
+Native cleanup failures are preserved in the smoke/initial replay reports. The successful worker used the documented immediate-exit lifecycle and returned status 0; graceful native cleanup is not established.
+
+Memory-measured repeat `ap-wjbNfT3IoBPwJXxWfKpU1K`: status 0; startup 49.589 s; import/setup 131.285 s; veto replay/render 7.573 s; allow 10.066 s; whole worker before exit 206.840 s. Sampled total device-memory peak 2,783 MiB from 383 readings at approximately 0.5 s intervals (plus monitor-call time). Allow/veto articulation results reproduced exactly. The source file SHA256 matches local `demo-verification.json` exactly. All project Modal apps are stopped. See `compute-budget-estimate.json`; actual billed spend remains unknown.

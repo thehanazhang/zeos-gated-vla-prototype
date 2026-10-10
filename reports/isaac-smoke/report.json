@@ -1,0 +1,16 @@
+{
+  "isaacsim_version": "6.1.0.0",
+  "headless_started": true,
+  "hardware_tested": false,
+  "physical_calibration_verified": false,
+  "startup_seconds": 27.256676023,
+  "usd_stage_created": true,
+  "updates": 10,
+  "elapsed_before_shutdown_seconds": 27.310088311,
+  "gpu": "NVIDIA L40S, 580.95.05, 645 MiB",
+  "process_returncode": -11,
+  "function_elapsed_seconds": 150.812858275,
+  "close_returned": true,
+  "clean_process_exit": false,
+  "run_id": "ap-hAr2JjeO3fwh7GyClgWiAW"
+}

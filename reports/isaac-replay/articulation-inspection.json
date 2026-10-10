@@ -1,0 +1,355 @@
+{
+  "roots": [
+    "/World/B601/Geometry/base_link"
+  ],
+  "usd_path": "/cache/isaac-replay/robot/ReBot_Arm_RS_3/ReBot_Arm_RS.usda",
+  "b601_prims": [
+    {
+      "path": "/World/B601",
+      "schemas": [
+        "GeomModelAPI",
+        "IsaacRobotAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Geometry",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link",
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsArticulationRootAPI",
+        "NewtonArticulationRootAPI",
+        "PhysicsMassAPI",
+        "NewtonMassAPI",
+        "IsaacLinkAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1",
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "NewtonMassAPI",
+        "IsaacLinkAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2",
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "NewtonMassAPI",
+        "IsaacLinkAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3",
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "NewtonMassAPI",
+        "IsaacLinkAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4",
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "NewtonMassAPI",
+        "IsaacLinkAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5",
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "NewtonMassAPI",
+        "IsaacLinkAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6",
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "NewtonMassAPI",
+        "IsaacLinkAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/gripper_end",
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "NewtonMassAPI",
+        "IsaacLinkAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/gripper_end/gripper_left",
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "NewtonMassAPI",
+        "IsaacLinkAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/gripper_end/gripper_left/pla_left",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/gripper_end/gripper_left/cnc_left",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/gripper_end/gripper_left/gripper_left",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/gripper_end/gripper_right",
+      "schemas": [
+        "PhysicsRigidBodyAPI",
+        "PhysicsMassAPI",
+        "NewtonMassAPI",
+        "IsaacLinkAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/gripper_end/gripper_right/pla_right",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/gripper_end/gripper_right/cnc_right",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/gripper_end/gripper_right/gripper_right",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/gripper_end/pla7_green",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/gripper_end/cnc7",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/gripper_end/motor_7",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/gripper_end/gripper_end",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/link6",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link6/link6_1",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/motor_6",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/cnc5",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/pla5_green",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link5/link5",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/motor_5",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/cnc4",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link4/link4",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/cnc3",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/motor_4",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/pla3_black_without_seeed_badge",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/pla3_seeed_badge_with_counters",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/pla3_seeed_wordmark_backing",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/pla3_green",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link3/link3",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/motor_2_3",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/cnc2",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/pla2_black",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/pla2_green",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link2/link2",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link1",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/link1/link1_1",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/base_link",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Geometry/base_link/base_link_1",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Physics",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/Physics/root_joint",
+      "schemas": [
+        "IsaacJointAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Physics/joint1",
+      "schemas": [
+        "PhysxJointAPI",
+        "NewtonJointAPI",
+        "PhysicsDriveAPI:angular",
+        "PhysicsJointStateAPI:angular",
+        "IsaacJointAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Physics/joint2",
+      "schemas": [
+        "PhysxJointAPI",
+        "NewtonJointAPI",
+        "PhysicsDriveAPI:angular",
+        "PhysicsJointStateAPI:angular",
+        "IsaacJointAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Physics/joint3",
+      "schemas": [
+        "PhysxJointAPI",
+        "NewtonJointAPI",
+        "PhysicsDriveAPI:angular",
+        "PhysicsJointStateAPI:angular",
+        "IsaacJointAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Physics/joint4",
+      "schemas": [
+        "PhysxJointAPI",
+        "NewtonJointAPI",
+        "PhysicsDriveAPI:angular",
+        "PhysicsJointStateAPI:angular",
+        "IsaacJointAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Physics/joint5",
+      "schemas": [
+        "PhysxJointAPI",
+        "NewtonJointAPI",
+        "PhysicsDriveAPI:angular",
+        "PhysicsJointStateAPI:angular",
+        "IsaacJointAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Physics/joint6",
+      "schemas": [
+        "PhysxJointAPI",
+        "NewtonJointAPI",
+        "PhysicsDriveAPI:angular",
+        "PhysicsJointStateAPI:angular",
+        "IsaacJointAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Physics/j_gripper_end",
+      "schemas": [
+        "IsaacJointAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Physics/gripper_joint1",
+      "schemas": [
+        "PhysxJointAPI",
+        "NewtonJointAPI",
+        "PhysicsDriveAPI:linear",
+        "PhysicsJointStateAPI:linear",
+        "IsaacJointAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Physics/gripper_joint2",
+      "schemas": [
+        "PhysxJointAPI",
+        "NewtonJointAPI",
+        "PhysicsDriveAPI:linear",
+        "PhysicsJointStateAPI:linear",
+        "IsaacJointAPI"
+      ]
+    },
+    {
+      "path": "/World/B601/Materials",
+      "schemas": []
+    },
+    {
+      "path": "/World/B601/VisualMaterials",
+      "schemas": []
+    }
+  ]
+}

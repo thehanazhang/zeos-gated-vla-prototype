@@ -76,17 +76,41 @@ The state values above belong to the first recorded frame used by the pilot. Use
 
 ## Learning details
 
+Gemma stays frozen for both training and inference. The workflow is: verify its image/text features and structured command generation, cache the original features for recorded frames, train only the action head against recorded action chunks, then evaluate on held-out episodes and through the gate. Our head starts from random weights; Gemma is pretrained but has no learned B601 motor interface. Freezing makes offline caching valid and keeps the semantic generator unchanged. Backbone adaptation is a possible future experiment if task evaluation reveals inadequate visual features, not a prerequisite for this movement/veto demonstration. A successful gate demonstration or low action loss does not establish closed-loop manipulation competence.
+
+The head is custom assembly around standard PyTorch `nn.TransformerDecoderLayer` / `nn.TransformerDecoder`, not a custom attention kernel. It uses four attention heads per layer. Queries come from noisy action tokens; keys and values are learned projections of Gemma’s frozen final states, not its internal KV cache. Action self-attention is bidirectional across the chunk.
+
+LeRobot 0.6.1 SmolVLA also implements cross-attention and flow matching, but its [packaged expert](https://github.com/huggingface/lerobot/blob/v0.6.1/src/lerobot/policies/smolvla/smolvlm_with_expert.py) is coupled to SmolVLM layers and per-layer KV/cache representations. It is not a drop-in final-hidden-state action head for Approach A. This small standalone head keeps the Gemma boundary explicit and retains the verified checkpoint. LeRobot is used for recorded dataset loading; no SmolVLM is loaded.
+
 A two-layer, width-128 transformer decoder has self-attention over 16 action tokens and cross-attention to Gemma's original final-layer token representations. A trained projection reduces the Gemma feature dimension only inside the head. Time Fourier features, learned step positions and projected proprioception condition the velocity field. Training interpolates Gaussian noise and recorded normalized actions with `x(t)=(1-t)noise+t*action`; the squared velocity error targets `action-noise`. Euler integration from noise to actions samples the chunk.
 
 Normalization statistics are fitted only on valid training actions and training proprioception. Padding is excluded from the flow loss. Training and validation episodes are disjoint. Checkpoints contain architecture, weights, normalization, dataset/model revisions, sample manifests and random seed. Validation reports flow loss and normalized sampled-action MSE; neither metric establishes closed-loop success.
 
 Cache keys bind the original RGB image, instruction, semantic prompt version, model revision, dataset revision and frame identity. Each stored tensor has a checksum. Variable-length feature masks prevent padded tokens from entering cross-attention.
 
+## Project continuity and compute budget
+
+The user approved commits, installing/starting/using Isaac Sim or Isaac Lab locally or on Modal, and up to US$25 for training. `HANDOVER.md` records the completed milestone, permissions, exact artifacts, current blockers and next steps; update it and this README as the project advances. `configs/budget.json` tracks conservative planning allocations separately from actual billing. Use bounded runs and avoid unattended GPU services.
+
 ## Simulation and Isaac Sim
 
 The demonstrated simulator records and applies joint targets in the dataset's original units. It has no contact dynamics, collision model or package-success metric. No hardware is contacted.
 
-An Isaac Sim scene is a subsequent integration step: obtain/import a B601 RS URDF/USD with collision geometry and joint limits; confirm the six arm joint values' units, signs and offsets plus the gripper conversion; match the wrist camera and package scene; then connect the simulator dispatch interface to an articulation controller. Isaac Sim angular targets use radians and its gripper articulation may differ from the recorded motor-angle field. Blindly converting all seven columns as arm angles is incorrect. See the [Isaac Sim 5.1 articulation controller documentation](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/robot_simulation/articulation_controller.html).
+Isaac Sim 6.1.0.0 replay passed on Modal L40S with NVIDIA Vulkan and driver 610.57.04. The Mac host is unsupported. The pinned manufacturer [B601-RS URDF/STL assets](https://github.com/Seeed-Projects/reBot-DevArm/tree/79f01c7056d5f667beba7e838593ea6c299388c5/Rebot_Arm_description/RS) were imported unmodified using the current `URDFImporter`/`URDFImporterConfig` APIs, explicitly selecting the generated `Physics=physx` variant. The controller locates the actual articulation root and checks all eight DOF names. One recorded gripper component drives two slider DOFs for display.
+
+The user deferred physical calibration. `display_mapping.py` applies arbitrary bounded deltas around a neutral pose: 0.05 radians per recorded arm unit and 1% of each slider's travel per recorded gripper unit. Gravity is zero, the base is fixed, and the box/red packages are approximate static props. These scales and slowed playback demonstrate visible motion; they do not reconstruct the recorded physical trajectory or establish package grasping. The veto dispatched zero trajectory targets and had exactly zero measured state drift; allow dispatched 16 targets and produced measured articulation motion. View [allow animation](reports/isaac-replay/allow.gif), [veto animation](reports/isaac-replay/veto.gif) and [report](reports/isaac-replay/report.json).
+
+Isaac runs separately from the verified Gemma environment because it requires a different PyTorch dependency set (2.11.0 versus 2.7.1). It replays the previously generated trained-head output from the complete demo, records that source file's SHA256, and performs fresh real ZEOS authorization before trajectory dispatch. It does not run live Gemma on the rendered camera images. The full original live Gemma → gate → head sequence is verified by `demo-verification.json`; Isaac articulation playback is a separate verified extension.
+
+After completing the six stages above:
+
+```bash
+uv run python scripts/fetch_b601_assets.py
+uv run modal run scripts/modal_isaac.py --mode smoke
+uv run modal run scripts/modal_isaac.py --mode replay
+```
+
+The worker saves its report, render GIFs/PNGs, kernel journals, actual package versions and native log in `reports/isaac-replay/`. Initial normal-cleanup runs aborted or segfaulted; their evidence is retained. The isolated worker uses NVIDIA's documented `SimulationApp.close(skip_cleanup=True, exit_code=...)` immediate exit, and its supervisor checks the process status. This is not a claim that normal cleanup is fixed. See [current lifecycle API](https://docs.isaacsim.omniverse.nvidia.com/6.1.0/py/source/extensions/isaacsim.simulation_app/docs/index.html), [importer API](https://docs.isaacsim.omniverse.nvidia.com/6.1.0/py/source/extensions/isaacsim.asset.importer.urdf/docs/index.html), and `THIRD_PARTY.md` for asset attribution.
 
 ## Status and evidence
 

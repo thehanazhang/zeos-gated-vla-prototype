@@ -10,3 +10,5 @@ artifacts/
 .env
 
 reports/dataset-sample.png
+assets/b601-RS/
+reports/isaac-*/scene.usda

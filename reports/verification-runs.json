@@ -1,0 +1,45 @@
+{
+  "verified_date": "2026-10-11",
+  "runs": {
+    "gemma": {
+      "run": "https://modal.com/apps/thehanazhang/main/ap-FFFrd6gu8D8a8HveAjhMPu",
+      "report": "gemma-verification.json"
+    },
+    "head": {
+      "run": "https://modal.com/apps/thehanazhang/main/ap-nexB7MO3OKY2O1mvkq3Fe5",
+      "report": "head-verification.json"
+    },
+    "dataset": {
+      "run": "https://modal.com/apps/thehanazhang/main/ap-K6uAr4o6R2YErkCSmMmC3D",
+      "report": "dataset-verification.json"
+    },
+    "cache": {
+      "run": "https://modal.com/apps/thehanazhang/main/ap-3Gc2PVw17NkcQmfIsZM3ws",
+      "report": "cache-verification.json"
+    },
+    "train": {
+      "run": "https://modal.com/apps/thehanazhang/main/ap-I24gy4Dcx7QiXGjvlnmsFr",
+      "report": "train-verification.json"
+    },
+    "demo": {
+      "run": "https://modal.com/apps/thehanazhang/main/ap-0ErgRuq36eQXP9ABQroXXD",
+      "report": "demo-verification.json"
+    }
+  },
+  "versions": {
+    "python": "3.12",
+    "torch": "2.7.1",
+    "transformers": "5.19.0",
+    "lerobot": "0.6.1",
+    "huggingface_hub": "1.31.0",
+    "modal": "1.4.3",
+    "zeos_commit": "36aaeafbe185530f0c33a9e049745bbb1b3ba3bd"
+  },
+  "checkpoint": {
+    "local_path": "checkpoints/package.pt",
+    "modal_volume": "zeos-vla-research",
+    "modal_path": "checkpoints/package.pt",
+    "sha256": "9efa48e968842e9d2b23df92f152756cbf7d56610f4d7fd584ac2ea4e5d14ea8",
+    "bytes": 3579637
+  }
+}

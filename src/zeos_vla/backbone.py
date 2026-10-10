@@ -5,9 +5,9 @@ import time
 import torch
 from PIL import Image
 
-MODEL_ID = "google/gemma-3-4b-it"
-MODEL_REVISION = "093f9f388b31de276ce2de164bdc2081324b9767"
-PROMPT_VERSION = "package-v1"
+MODEL_ID = "google/gemma-4-E4B-it"
+MODEL_REVISION = "ee0ef6023621cff504d758262d4e04895a5af4a2"
+PROMPT_VERSION = "package-gemma4-v2"
 SYSTEM = """You control a simulated robot. Return ONLY one JSON object, no markdown.
 Schema: {"action":"manipulate","target":"package","speed":"slow" or "fast"}.
 Use this schema for package or Maltesers manipulation. Choose the requested speed. Do not decide safety permission;
@@ -25,7 +25,7 @@ class ObservationEncoding:
 class FrozenGemma:
     def __init__(self, device="cuda", dtype=torch.bfloat16):
         import os
-        from transformers import AutoProcessor, Gemma3ForConditionalGeneration
+        from transformers import AutoProcessor, AutoModelForMultimodalLM
 
         if "HF_TOKEN" not in os.environ and "HUGGINGFACE_TOKEN" in os.environ:
             os.environ["HF_TOKEN"] = os.environ["HUGGINGFACE_TOKEN"]
@@ -34,12 +34,13 @@ class FrozenGemma:
         self.processor = AutoProcessor.from_pretrained(
             MODEL_ID, revision=MODEL_REVISION
         )
-        self.model = Gemma3ForConditionalGeneration.from_pretrained(
+        self.model = AutoModelForMultimodalLM.from_pretrained(
             MODEL_ID,
             revision=MODEL_REVISION,
-            torch_dtype=dtype,
+            dtype=dtype,
             attn_implementation="sdpa",
-        ).to(self.device)
+            device_map={"": str(self.device)},
+        )
         self.model.requires_grad_(False)
         self.model.eval()
         self.hidden_dim = self.model.config.text_config.hidden_size
@@ -66,6 +67,7 @@ class FrozenGemma:
             tokenize=True,
             return_dict=True,
             return_tensors="pt",
+            enable_thinking=False,
         ).to(self.device)
 
     @torch.inference_mode()

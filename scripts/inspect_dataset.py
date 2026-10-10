@@ -7,7 +7,7 @@ import modal
 ROOT = Path(__file__).resolve().parents[1]
 app = modal.App("zeos-vla-dataset-inspection")
 image = modal.Image.debian_slim(python_version="3.12").pip_install(
-    "huggingface-hub==0.35.3"
+    "huggingface-hub==1.31.0"
 )
 
 

@@ -1,0 +1,18 @@
+{
+  "stage": "gemma_multimodal_verification",
+  "command": "{\"action\":\"manipulate\",\"target\":\"package\",\"speed\":\"slow\"}",
+  "prefill_seconds": 0.8920138749999893,
+  "generation_seconds": 0.6074900229999969,
+  "prompt_tokens": 371,
+  "generated_tokens": 15,
+  "feature_shape": [
+    1,
+    371,
+    2560
+  ],
+  "backbone_frozen": true,
+  "gpu": "NVIDIA L40S",
+  "peak_allocated_bytes": 15979752448,
+  "peak_reserved_bytes": 16036921344,
+  "model_revision": "ee0ef6023621cff504d758262d4e04895a5af4a2"
+}

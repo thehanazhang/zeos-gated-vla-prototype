@@ -12,9 +12,9 @@
     7
   ],
   "training_iterations": 30,
-  "training_seconds": 0.7148337140000001,
-  "head_inference_seconds": 0.03552983249999997,
-  "head_inference_p95_seconds": 0.03591753099999995,
+  "training_seconds": 0.9447885859999996,
+  "head_inference_seconds": 0.06227420550000007,
+  "head_inference_p95_seconds": 0.06334329499999924,
   "head_inference_trials": 20,
   "loss_first": 2.519824743270874,
   "loss_last": 1.9668371677398682,

@@ -1,8 +1,11 @@
 {
   "tests_passed": 23,
-  "test_scope": "Offline unit/integration contracts; genuine tiny random Gemma3; real ZEOS kernel; synthetic training/checkpoint fixtures",
+  "test_scope": "Offline unit/integration contracts; genuine tiny random Gemma4; real ZEOS kernel; synthetic training/checkpoint fixtures",
   "python": "3.12.13",
   "platform": "macOS arm64",
-  "pretrained_gemma_4b_verified": false,
-  "recorded_action_training_complete": false
+  "recorded_action_training_complete": true,
+  "transformers": "5.19.0",
+  "pretrained_gemma4_verified": true,
+  "complete_pretrained_allow_veto_verified": true,
+  "feature_cache_live_exact_verified": true
 }

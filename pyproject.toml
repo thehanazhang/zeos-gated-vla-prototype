@@ -9,15 +9,20 @@ description = "Approach A frozen Gemma VLA with real ZEOS action gates"
 requires-python = ">=3.12,<3.13"
 license = "AGPL-3.0-only"
 dependencies = [
-  "torch==2.7.1", "torchvision==0.22.1", "transformers==4.53.3",
-  "huggingface-hub==0.35.3", "pillow==11.3.0", "numpy==2.2.6", "pyyaml==6.0.2",
+  "torch==2.7.1", "torchvision==0.22.1", "transformers==5.19.0",
+  "huggingface-hub==1.31.0", "pillow==11.3.0", "numpy==2.2.6", "pyyaml==6.0.2", "accelerate==1.15.0",
   "zeos @ git+https://github.com/metacognitionai/zeos.git@36aaeafbe185530f0c33a9e049745bbb1b3ba3bd",
 ]
 [project.optional-dependencies]
-data = ["lerobot==0.4.4", "av==15.1.0", "torchcodec==0.5.0"]
+data = ["lerobot[dataset]==0.6.1", "av==15.1.0", "torchcodec==0.5.0"]
 dev = ["pytest==8.4.2", "ruff==0.16.5"]
 cloud = ["modal==1.4.3"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 [tool.hatch.build.targets.wheel]
 packages = ["src/zeos_vla"]
+[tool.uv]
+environments = [
+  "sys_platform == 'linux' and platform_machine == 'x86_64'",
+  "sys_platform == 'darwin' and platform_machine == 'arm64'",
+]

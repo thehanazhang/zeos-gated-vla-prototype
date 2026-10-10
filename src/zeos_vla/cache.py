@@ -32,8 +32,8 @@ def provenance(sample, dataset_id, dataset_revision):
         "image_sha256": hashlib.sha256(sample["image"].tobytes()).hexdigest(),
         "image_size": list(sample["image"].size),
         "feature_dtype": "torch.bfloat16",
-        "transformers": "4.53.3",
-        "processor_policy": "Gemma3 default apply_chat_template RGB",
+        "transformers": "5.19.0",
+        "processor_policy": "Gemma4 default apply_chat_template RGB; thinking disabled",
     }
 
 

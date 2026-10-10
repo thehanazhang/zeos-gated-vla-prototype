@@ -1,8 +1,10 @@
 # ZEOS-gated Gemma action prototype
 
-Approach A: one completely frozen `google/gemma-3-4b-it` produces a structured semantic proposal and the final hidden states of its original image/instruction prompt. The semantic proposal alone enters the real Metacognition ZEOS kernel. A separate deterministic guard job checks the proposal. Only an authorized device-pipe write permits the flow-matching head to sample a 16-step action chunk using the original Gemma representations and robot proprioception. A veto returns feedback to the same Gemma and dispatches zero actions.
+Approach A: one completely frozen `google/gemma-4-E4B-it` produces a structured semantic proposal and the final hidden states of its original image/instruction prompt. The semantic proposal alone enters the real Metacognition ZEOS kernel. A separate deterministic guard job checks the proposal. Only an authorized device-pipe write permits the flow-matching head to sample a 16-step action chunk using the original Gemma representations and robot proprioception. A veto returns feedback to the same Gemma and dispatches zero actions.
 
 No Gemma KV-cache modifications, embedding interpretation by ZEOS, second reasoning VLM, or trained semantic decoder. Native Transformers generation uses its normal cache. Feature extraction uses a separate cache-free forward through Gemma's base model, which exposes `last_hidden_state` directly and avoids retaining every layer.
+
+The E4B model uses 4.5B effective parameters and has approximately 8B total parameters. The `it` checkpoint is instruction-tuned, making it appropriate for structured command generation. We disable optional thinking through the official chat-template argument and keep all model parameters frozen. The model revision is pinned to `ee0ef6023621cff504d758262d4e04895a5af4a2`.
 
 ## Data decision
 
@@ -16,8 +18,8 @@ The pilot uses 12 training episodes and 3 disjoint validation episodes, sparsely
 
 ## Upstream API references
 
-- [Transformers 4.53.3 Gemma implementation](https://github.com/huggingface/transformers/blob/v4.53.3/src/transformers/models/gemma3/modeling_gemma3.py): `Gemma3ForConditionalGeneration.model` returns the multimodal final hidden states; `AutoProcessor.apply_chat_template` handles image and text.
-- [LeRobot 0.4.4 dataset implementation](https://github.com/huggingface/lerobot/blob/v0.4.4/src/lerobot/datasets/lerobot_dataset.py): `delta_timestamps`, episode-boundary padding, `video_backend="pyav"`.
+- [Transformers 5.19.0 Gemma 4 implementation](https://github.com/huggingface/transformers/blob/v5.19.0/src/transformers/models/gemma4/modeling_gemma4.py): `AutoModelForMultimodalLM` loads `Gemma4ForConditionalGeneration`; its `.model` returns the multimodal final hidden states; `AutoProcessor.apply_chat_template` handles image and text.
+- [LeRobot 0.6.1 dataset implementation](https://github.com/huggingface/lerobot/blob/v0.6.1/src/lerobot/datasets/lerobot_dataset.py): `delta_timestamps`, episode-boundary padding, `video_backend="pyav"`.
 - [Pinned ZEOS action-gate mechanism](https://github.com/metacognitionai/zeos/blob/36aaeafbe185530f0c33a9e049745bbb1b3ba3bd/src/zeos/core/gates.py), [kernel](https://github.com/metacognitionai/zeos/blob/36aaeafbe185530f0c33a9e049745bbb1b3ba3bd/src/zeos/core/kernel.py), and [CommandSeat API](https://github.com/metacognitionai/zeos/blob/36aaeafbe185530f0c33a9e049745bbb1b3ba3bd/src/zeos/machine/seat.py).
 - [Modal GPUs](https://modal.com/docs/guide/gpu) and [secrets](https://modal.com/docs/guide/secrets).
 
@@ -33,11 +35,11 @@ uv run pytest -q
 uv run python scripts/gate_demo.py
 ```
 
-The gate-only demo uses an authored semantic command and the real kernel. It is independent of Gemma access and is explicitly not an end-to-end learned-policy demonstration. Offline tests include a genuine tiny random Gemma3 multimodal model to check the Transformers contract, not a substitute for verifying the pretrained 4B weights.
+The gate-only demo uses an authored semantic command and the real kernel. It is independent of Gemma downloads and is explicitly not an end-to-end learned-policy demonstration. Offline tests include a genuine tiny random Gemma4 multimodal model to check the Transformers contract, not a substitute for verifying the pretrained E4B weights.
 
 ## GPU stages on Modal
 
-Accept the Gemma model terms on Hugging Face and ensure the token in Modal's `huggingface` secret can read both the gated model and your private dataset. The app uses an L40S and an explicit 30-minute maximum per expensive stage; nothing is deployed as a persistent service. Weights, features and checkpoints persist in the `zeos-vla-research` Modal volume.
+The Gemma 4 E4B model is public and ungated. Ensure the token in Modal's `huggingface` secret can read your private dataset. The app uses an L40S and an explicit 30-minute maximum per expensive stage; nothing is deployed as a persistent service. Weights, features and checkpoints persist in the `zeos-vla-research` Modal volume.
 
 ```bash
 uv run modal run scripts/inspect_dataset.py
@@ -87,6 +89,8 @@ The demonstrated simulator records and applies joint targets in the dataset's or
 An Isaac Sim scene is a subsequent integration step: obtain/import a B601 RS URDF/USD with collision geometry and joint limits; confirm the six arm joint values' units, signs and offsets plus the gripper conversion; match the wrist camera and package scene; then connect the simulator dispatch interface to an articulation controller. Isaac Sim angular targets use radians and its gripper articulation may differ from the recorded motor-angle field. Blindly converting all seven columns as arm angles is incorrect. See the [Isaac Sim 5.1 articulation controller documentation](https://docs.isaacsim.omniverse.nvidia.com/5.1.0/robot_simulation/articulation_controller.html).
 
 ## Status and evidence
+
+All six stages have been executed successfully with Gemma 4 and recorded actions. The real ZEOS veto skipped the head and dispatched zero steps; allow dispatched one 16-step joint-state chunk. On L40S the complete first allow cycle measured 2.286 seconds and peak allocated GPU memory was 14.89 GiB. This is a gating demonstration, not real-time or contact-based manipulation validation.
 
 See `reports/STATUS.md` for executed checks, measured results and outstanding blockers. Reports distinguish synthetic tests, real dataset reads, real kernel enforcement, pretrained backbone runs, Isaac Sim and hardware. An absent GPU result is not an assumed acceptable result.
 

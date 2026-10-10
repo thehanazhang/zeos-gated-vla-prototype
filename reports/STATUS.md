@@ -1,32 +1,49 @@
 # Verification status — 11 October 2026
 
-Implemented repository; pretrained end-to-end verification and recorded-action training are pending gated Gemma access.
+The full Approach A prototype was executed on Modal: frozen pretrained `google/gemma-4-E4B-it`, a head trained on the user's recorded actions, the unmodified real ZEOS kernel, and a joint-state simulator. All six ordered GPU/data stages passed. No Isaac Sim or hardware success is claimed.
 
 | Component | Executed evidence | Status |
 |---|---|---|
-| Pretrained `google/gemma-3-4b-it` download | Modal returned Hugging Face HTTP 403: account not authorized | Blocked |
-| Transformers multimodal generation/final states | Genuine tiny random Gemma3, image tokens + pixels, final features, native generation, no backbone gradients | Offline contract passed; pretrained 4B unverified |
-| Flow head | Shape, finite loss, all gradients, cross-attention gradient, masked features, synthetic optimization | Passed |
-| Actual LeRobot adapter | User's pinned private dataset decoded on Modal; 120 selected samples from episodes 0–14; wrist RGB; 16×7 actions; episode-end mask | Passed |
-| Feature cache | Tensor round-trip, checksum tampering rejection, instruction/revision mismatch | Unit passed; pretrained live/cache comparison pending |
-| Training/checkpoints | Short synthetic cache training, episode-overlap rejection, checkpoint reload and deterministic policy inference | Unit passed; recorded-action training pending |
-| Real ZEOS gate | Real `Kernel` + `CommandSeat` + `GateSpec`, held device write, allow/veto | Passed |
-| Failure closed | Malformed verdict, timeout, guard crash and early exit | Passed |
-| Head + gate smoke demo | Trained real head on synthetic fixtures, authored command, real ZEOS, joint-state simulation | Passed: allow 1 head call / 16 dispatched steps; veto 0 / 0 |
-| Complete pretrained runtime and Gemma feedback | Implemented executable Modal stage | Pending |
-| Isaac Sim | No robot USD/scene or verified units supplied | Not run |
+| Pretrained Gemma 4 | Image/text generation returned valid JSON; final states `[1,371,2560]`; every parameter frozen | Passed |
+| Offline backbone contract | Genuine tiny random Gemma4 multimodal model, native generation, no backbone gradients while head receives gradients | Passed |
+| Flow head | Output dimensions, finite loss, gradients including cross-attention, padding masks, synthetic optimization | Passed |
+| LeRobot adapter | Actual pinned private dataset; wrist RGB 640×480; 16×7 actions; episode-end masks | Passed with LeRobot 0.6.1 |
+| Feature cache | 120 pretrained feature records; first record exactly matches a fresh extraction; checksums verified during training | Passed |
+| Recorded-action training | 1,000 updates; 96 train / 24 validation samples; disjoint episodes 0–11 / 12–14 | Passed |
+| Checkpoint/inference | Real trained checkpoint reloaded on GPU; original live Gemma features used for policy sampling | Passed |
+| Real ZEOS | Real Kernel + CommandSeat + GateSpec hold and release the device-pipe proposal; exact payload and event ordering checked | Passed |
+| Failure closed | Malformed verdict, timeout, guard crash, early exit, invalid command and nonfinite prediction | Passed |
+| Complete allow | Same Gemma proposal authorized; head called; one 16-step chunk dispatched; final joint-state delta norm 9.82968 in recorded units | Passed |
+| Complete veto | Head skipped; zero chunks/steps dispatched; denial feedback sent to the same Gemma instance | Passed |
+| Isaac Sim | No B601 geometry, verified conversion or contact scene available | Not run |
 | Robot hardware | No hardware accessed | Not run |
 
-23 tests pass locally on Python 3.12.13 / macOS arm64. See the tests for fixture scope. No synthetic feature tensor or tiny random model is presented as a pretrained Gemma result.
+23 local tests passed on Python 3.12.13 / macOS arm64 with Transformers 5.19.0. The unit suite uses tiny random model weights and synthetic fixtures where appropriate; the separate cloud reports establish pretrained and recorded-data execution.
 
 ## Measured GPU evidence
 
-`head-verification.json` records the independent synthetic-conditioning head benchmark on NVIDIA L40S under the exported lock. Across 20 warm trials, median sampling latency was 35.5 ms and p95 was 35.9 ms for a 16×7 chunk. Peak allocated memory was 165,560,320 bytes (157.9 MiB), with 201,326,592 bytes reserved (192 MiB). The synthetic training benchmark uses batch 4, 1,024 feature tokens and feature dimension 2,560; sample timing uses batch 1 and 32 Euler steps. Peak memory includes the head, input tensors, optimizer and training allocations. It does not include Gemma. Repeated benchmark run: `ap-9Vt83YCtHSEDiofagEQUAE`.
+Measurements use NVIDIA L40S, BF16 frozen Gemma, PyTorch 2.7.1 and Transformers 5.19.0. Times exclude model download/loading. Peak CUDA allocated and reserved values describe PyTorch allocations, not the total GPU process footprint measured by a device monitor.
 
-Gemma GPU memory, multimodal prefill latency, semantic generation latency, real-feature cache timings and complete policy-loop latency are **unmeasured** because model access failed before loading. No claim is made about their acceptability or real-time capacity.
+| Run / scope | Latency | Peak allocated / reserved |
+|---|---|---|
+| First pretrained verification, synthetic image, 371 prompt tokens | Feature prefill 0.892 s; semantic generation 0.607 s / 15 new tokens | 15,979,752,448 / 16,036,921,344 bytes |
+| Feature caching, 120 actual recorded frames | Mean synchronized prefill 0.109 s | 15,985,249,280 / 16,011,755,520 bytes |
+| Independent synthetic head benchmark, 1,024 conditioning tokens, 32 Euler steps | 20 warm trials: median 62.3 ms, p95 63.3 ms | 165,560,320 / 201,326,592 bytes; includes batch-4 training allocations |
+| Recorded-action head training, batch 8, 1,000 updates | 47.019 s training | 127,439,872 / 148,897,792 bytes; excludes Gemma |
+| Complete real-frame demonstration, 371 tokens | Feature prefill 0.991 s; generation 1.003 s; allow gate 30.0 ms; first head call 107.7 ms | 15,983,374,336 / 16,036,921,344 bytes (14.89 / 14.94 GiB), includes backbone and head |
+| Complete allow cycle | 2.286 s including image preprocessing, feature extraction, semantic generation, gate and head | Same full-run peak above |
+| Complete veto cycle | 3.144 s including initial encoding, gate and 0.966 s Gemma feedback generation | Same full-run peak above |
 
-## Reproduction
+The complete demonstration measures one shared observation encoding and one execution of each policy branch, not a sustained control-loop benchmark. At 30 Hz a 16-step chunk covers about 0.53 seconds; the measured allow cycle is longer than that. Real-time closed-loop control has not been demonstrated. The first-call backbone timings include initialization overhead; the cache report separately measures repeated feature extraction.
 
-Run the documented Modal stages after enabling access to the gated checkpoint for the account/token in the existing `huggingface` Modal secret. The private dataset is already readable by that secret. Initial access-failure run: `ap-7ndGXn0b2Qm0mMU39IbRIX`; actual dataset-validation run: `ap-JLBbJsUaXdPQTxGmqFp3RR`; initial GPU head benchmark: `ap-bQyBlv83Vwyz4ayZLOrqDP`.
+## Learning and demonstration scope
 
-The requested development order was followed for the initial Gemma verification attempt. After its external access block, independent head tests, dataset validation and gate integration proceeded. Recorded-feature training and the complete demo were not bypassed with substitute model features.
+The head has 888,071 trainable parameters. Training flow loss was 1.8169 at step 0 and 0.0752 at step 999. Held-out flow loss was 0.2336; normalized sampled-action MSE was 0.0650 using 16 Euler steps. Demo sampling uses 32 steps. These are pilot prediction metrics on sparse frame samples, not a package manipulation success rate.
+
+The simulator applies joint targets in the dataset's original units. It does not model B601 geometry, servo limits, collisions, object contact or grasp success. The permitted trajectory is not independently checked for semantic fidelity. Veto feedback was actually generated by the same pretrained Gemma, but it repeated the structured proposal; the runtime kept the veto terminal and dispatched no motion.
+
+## Reproduction and evidence
+
+See README for installation and the six ordered Modal commands. `verification-runs.json` records run URLs, pinned versions and the downloaded checkpoint checksum. `demo-verification.json` contains actual action values and the full real-kernel journals for both branches. The trained checkpoint is retained at `checkpoints/package.pt` locally and in the `zeos-vla-research` Modal volume; weights and private sample images are excluded from Git and can be downloaded using the documented commands.
+
+`gemma-access-failure.json` is historical: the initially specified gated Gemma 3 download returned HTTP 403. The user changed the backbone to public Gemma 4 E4B, which passed all pretrained stages. No current Gemma-access blocker remains.

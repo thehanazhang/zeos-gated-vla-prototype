@@ -264,6 +264,7 @@ def benchmark_head():
     secrets=[modal.Secret.from_name("huggingface")],
 )
 def complete_demo():
+    import time
     import torch
     from PIL import Image
     from zeos_vla.backbone import FrozenGemma
@@ -279,13 +280,18 @@ def complete_demo():
     state = record["proprio"]
     backbone = FrozenGemma()
     policy = Policy("/cache/checkpoints/package.pt", "cuda")
+    torch.cuda.reset_peak_memory_stats()
+    torch.cuda.synchronize()
+    encode_start = time.perf_counter()
     encoding = backbone.encode(image, instruction)
+    encoding_seconds = time.perf_counter() - encode_start
     torch.testing.assert_close(
         encoding.features[0].cpu().float(), record["features"].float(), rtol=0, atol=0
     )
     cases = {}
     for name, allow in [("veto", False), ("allow", True)]:
         robot = JointStateSimulator(state)
+        start = time.perf_counter()
         cases[name] = run_encoded(
             backbone,
             policy,
@@ -296,6 +302,11 @@ def complete_demo():
             instruction,
             state,
         )
+        torch.cuda.synchronize()
+        cases[name]["post_encoding_seconds"] = time.perf_counter() - start
+        cases[name]["total_seconds_including_encoding"] = (
+            encoding_seconds + cases[name]["post_encoding_seconds"]
+        )
         cases[name]["simulator_chunks"] = len(robot.chunks)
     assert cases["veto"]["dispatched_steps"] == 0 and not cases["veto"]["head_called"]
     assert cases["veto"]["feedback"] is not None
@@ -305,6 +316,10 @@ def complete_demo():
         "scope": "Frozen pretrained Gemma + recorded-action-trained head + real ZEOS + joint-state simulator",
         "isaac_sim_tested": False,
         "hardware_tested": False,
+        "gpu": torch.cuda.get_device_name(),
+        "peak_allocated_bytes": torch.cuda.max_memory_allocated(),
+        "peak_reserved_bytes": torch.cuda.max_memory_reserved(),
+        "initial_proprio": state.tolist(),
         "cases": cases,
     }
     Path("/cache/complete-demo.json").write_text(json.dumps(report, indent=2))
@@ -328,4 +343,20 @@ def main(stage: str = "gemma", steps: int = 1000):
     (ROOT / "reports" / f"{stage}-verification.json").write_text(
         json.dumps(result, indent=2)
     )
-    print(json.dumps(result, indent=2))
+    if stage == "demo":
+        summary = {k: v for k, v in result.items() if k != "cases"}
+        summary["cases"] = {
+            name: {
+                k: (
+                    {gk: gv for gk, gv in v.items() if gk != "journal"}
+                    if k == "gate"
+                    else v
+                )
+                for k, v in case.items()
+                if k != "actions"
+            }
+            for name, case in result["cases"].items()
+        }
+        print(json.dumps(summary, indent=2))
+    else:
+        print(json.dumps(result, indent=2))

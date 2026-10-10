@@ -8,5 +8,7 @@
   "modal_run_id": "ap-7ndGXn0b2Qm0mMU39IbRIX",
   "gpu_memory_measured": false,
   "generation_latency_measured": false,
-  "recorded_feature_training_complete": false
+  "recorded_feature_training_complete": false,
+  "historical_only": true,
+  "superseded_by": "gemma-verification.json: user-selected public Gemma 4 E4B passed"
 }

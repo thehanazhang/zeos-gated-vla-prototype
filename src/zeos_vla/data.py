@@ -36,7 +36,6 @@ class LeRobotAdapter(Dataset):
         self.camera_key = camera_key
         self.instruction = instruction
         self.revision = revision
-        self.raw._ensure_hf_dataset_loaded()
         self.episode_ids = torch.as_tensor(
             list(self.raw.hf_dataset["episode_index"])
         ).flatten()

@@ -1,0 +1,8 @@
+{
+  "samples": 120,
+  "live_cache_exact_consistency": true,
+  "new_prefill_count": 120,
+  "mean_prefill_seconds": 0.10925478040000014,
+  "peak_allocated_bytes": 15985249280,
+  "peak_reserved_bytes": 16011755520
+}

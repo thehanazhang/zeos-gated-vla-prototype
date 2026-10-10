@@ -34,7 +34,9 @@ def run_encoded(
     }
     try:
         command = SemanticCommand.parse(encoding.command_text)
+        gate_start = time.perf_counter()
         decision = gate.authorize(command)
+        result["gate_seconds"] = time.perf_counter() - gate_start
         result["gate"] = asdict(decision)
     except Exception as exc:
         reason = f"Command validation/runtime failure: {type(exc).__name__}: {exc}"
@@ -47,7 +49,9 @@ def run_encoded(
     result["reason"] = decision.reason
     if not decision.allowed:
         try:
+            feedback_start = time.perf_counter()
             result["feedback"] = backbone.feedback(image, instruction, decision.reason)
+            result["feedback_seconds"] = time.perf_counter() - feedback_start
         except Exception as exc:
             result["feedback_error"] = type(exc).__name__
         return result

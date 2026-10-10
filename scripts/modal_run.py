@@ -44,6 +44,9 @@ def verify_gemma():
     d.text((90, 100), "Maltesers package", fill="white")
     model = FrozenGemma()
     result = model.encode(img, "Manipulate the package of mini Maltesers slowly.")
+    from zeos_vla.semantic import SemanticCommand
+
+    SemanticCommand.parse(result.command_text)
     assert result.features.shape[-1] == model.hidden_dim
     assert torch.isfinite(result.features).all() and not result.features.requires_grad
     assert all(not p.requires_grad for p in model.model.parameters())
@@ -219,11 +222,16 @@ def benchmark_head():
     assert all(torch.isfinite(v.grad).all() for v in head.parameters())
     head.eval()
     head.sample(f[:1], p[:1], mask[:1], steps=32)  # warmup
-    torch.cuda.synchronize()
-    start = time.perf_counter()
-    chunk = head.sample(f[:1], p[:1], mask[:1], steps=32)
-    torch.cuda.synchronize()
-    inference = time.perf_counter() - start
+    latencies = []
+    for _ in range(20):
+        torch.cuda.synchronize()
+        start = time.perf_counter()
+        chunk = head.sample(f[:1], p[:1], mask[:1], steps=32)
+        torch.cuda.synchronize()
+        latencies.append(time.perf_counter() - start)
+    import statistics
+
+    inference = statistics.median(latencies)
     command = SemanticCommand("manipulate", "package", "slow")
     report = {
         "scope": "Independent action head on synthetic conditioning/actions; not pretrained Gemma or recorded-action training",
@@ -233,6 +241,8 @@ def benchmark_head():
         "training_iterations": 30,
         "training_seconds": training,
         "head_inference_seconds": inference,
+        "head_inference_p95_seconds": sorted(latencies)[18],
+        "head_inference_trials": len(latencies),
         "loss_first": losses[0],
         "loss_last": losses[-1],
         "all_gradients_finite": True,

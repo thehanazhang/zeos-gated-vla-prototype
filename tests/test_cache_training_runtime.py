@@ -204,3 +204,27 @@ def test_runtime_invalid_command_and_broken_backbone():
         model, policy, ZeosActionGate(True), robot, None, "task", torch.zeros(7)
     )
     assert not result["allowed"] and result["dispatched_steps"] == 0
+
+
+def test_nonfinite_policy_output_never_dispatches():
+    encoding = ObservationEncoding(
+        torch.randn(1, 5, 24),
+        torch.ones(1, 5, dtype=torch.bool),
+        '{"action":"manipulate","target":"package","speed":"slow"}',
+        {},
+    )
+    policy = PolicySpy()
+    policy.predict = lambda *args, **kwargs: torch.full((1, 16, 7), float("nan"))
+    robot = JointStateSimulator(torch.zeros(7))
+    result = run_encoded(
+        BackboneSpy(),
+        policy,
+        ZeosActionGate(True),
+        robot,
+        encoding,
+        None,
+        "task",
+        torch.zeros(7),
+    )
+    assert not result["allowed"] and result["head_called"]
+    assert result["dispatched_steps"] == 0 and not robot.chunks

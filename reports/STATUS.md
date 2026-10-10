@@ -17,11 +17,11 @@ Implemented repository; pretrained end-to-end verification and recorded-action t
 | Isaac Sim | No robot USD/scene or verified units supplied | Not run |
 | Robot hardware | No hardware accessed | Not run |
 
-22 tests pass locally on Python 3.12.13 / macOS arm64. See the tests for fixture scope. No synthetic feature tensor or tiny random model is presented as a pretrained Gemma result.
+23 tests pass locally on Python 3.12.13 / macOS arm64. See the tests for fixture scope. No synthetic feature tensor or tiny random model is presented as a pretrained Gemma result.
 
 ## Measured GPU evidence
 
-`head-verification.json` records the independent synthetic-conditioning head benchmark on NVIDIA L40S. The first measured run sampled a 16×7 chunk in 36.7 ms, with 165,560,320 bytes peak allocated (157.9 MiB) and 201,326,592 bytes reserved (192 MiB). A second run under the exported lock updates that JSON and may differ slightly. The synthetic benchmark uses batch 4, 1,024 feature tokens and feature dimension 2,560; sample timing uses batch 1 and 32 Euler steps after warmup. Peak memory includes the head, input tensors, optimizer and training allocations. It does not include Gemma.
+`head-verification.json` records the independent synthetic-conditioning head benchmark on NVIDIA L40S under the exported lock. Across 20 warm trials, median sampling latency was 35.5 ms and p95 was 35.9 ms for a 16×7 chunk. Peak allocated memory was 165,560,320 bytes (157.9 MiB), with 201,326,592 bytes reserved (192 MiB). The synthetic training benchmark uses batch 4, 1,024 feature tokens and feature dimension 2,560; sample timing uses batch 1 and 32 Euler steps. Peak memory includes the head, input tensors, optimizer and training allocations. It does not include Gemma. Repeated benchmark run: `ap-9Vt83YCtHSEDiofagEQUAE`.
 
 Gemma GPU memory, multimodal prefill latency, semantic generation latency, real-feature cache timings and complete policy-loop latency are **unmeasured** because model access failed before loading. No claim is made about their acceptability or real-time capacity.
 

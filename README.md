@@ -1,16 +1,14 @@
 # ZEOS-gated Gemma action prototype
 
-Approach A: one completely frozen `google/gemma-4-E4B-it` produces a structured semantic proposal and the final hidden states of its original image/instruction prompt. The semantic proposal alone enters the real Metacognition ZEOS kernel. A separate deterministic guard job checks the proposal. Only an authorized device-pipe write permits the flow-matching head to sample a 16-step action chunk using the original Gemma representations and robot proprioception. A veto returns feedback to the same Gemma and dispatches zero actions.
+Frozen `google/gemma-4-E4B-it` produces a structured semantic proposal and the final hidden states of its original image/instruction prompt. The semantic proposal alone enters the real Metacognition ZEOS kernel. A separate deterministic guard job checks the proposal. Only an authorized device-pipe write permits the flow-matching head to sample a 16-step action chunk using the original Gemma representations and robot proprioception. A veto returns feedback to the same Gemma and dispatches zero actions.
 
 No Gemma KV-cache modifications, embedding interpretation by ZEOS, second reasoning VLM, or trained semantic decoder. Native Transformers generation uses its normal cache. Feature extraction uses a separate cache-free forward through Gemma's base model, which exposes `last_hidden_state` directly and avoids retaining every layer.
 
 The E4B model uses 4.5B effective parameters and has approximately 8B total parameters. The `it` checkpoint is instruction-tuned, making it appropriate for structured command generation. We disable optional thinking through the official chat-template argument and keep all model parameters frozen. The model revision is pinned to `ee0ef6023621cff504d758262d4e04895a5af4a2`.
 
-## Data decision
+This prototype uses a private Hugging Face dataset that has been filtered for data quality and encoder wobble. Metadata: LeRobot v3.0, 150 episodes, 39,559 frames, 30 Hz, wrist RGB 640×480, seven state/action components (six arm joints plus gripper).
 
-Use recorded actions for the action head, not arbitrary plausible numbers. Synthetic tensors test dimensions, optimization and gradient flow. They cannot establish learned manipulation. This prototype uses the user's private `thehanazhang/b601_rs_manipulate_package_v3_150`, pinned to `d18511446db55a41bf3ae5d1ded06d05ddbbd835`. Metadata: LeRobot v3.0, 150 episodes, 39,559 frames, 30 Hz, wrist RGB 640×480, seven state/action components (six arm joints plus gripper).
-
-The pilot uses 12 training episodes and 3 disjoint validation episodes, sparsely sampled. It is a recorded-action feasibility experiment, not evidence of successful package manipulation. Do not interpret recorded `.pos` values as radians without confirming the collection configuration and calibration. A 16-frame chunk at 30 Hz spans about 0.53 seconds.
+The pilot uses 12 training episodes and 3 disjoint validation episodes, sparsely sampled. It is a recorded-action feasibility experiment, not evidence of successful package manipulation. A 16-frame chunk at 30 Hz spans about 0.53 seconds.
 
 ## Gate policy
 

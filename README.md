@@ -1,6 +1,6 @@
 # ZEOS-gated Gemma action prototype
 
-Frozen `google/gemma-4-E4B-it` produces a structured semantic proposal and the final hidden states of its original image/instruction prompt. The semantic proposal alone enters the real Metacognition ZEOS kernel. A separate deterministic guard job checks the proposal. Only an authorized device-pipe write permits the flow-matching head to sample a 16-step action chunk using the original Gemma representations and robot proprioception. A veto returns feedback to the same Gemma and dispatches zero actions.
+Frozen `google/gemma-4-E4B-it` produces a structured semantic proposal and the final hidden states of its original image/instruction prompt. The semantic proposal alone enters the real [Metacognition ZEOS](https://github.com/metacognitionai/zeos) kernel. A separate deterministic guard job checks the proposal. Only an authorized device-pipe write permits the flow-matching head to sample a 16-step action chunk using the original Gemma representations and robot proprioception. A veto returns feedback to the same Gemma and dispatches zero actions.
 
 No Gemma KV-cache modifications, embedding interpretation by ZEOS, second reasoning VLM, or trained semantic decoder. Native Transformers generation uses its normal cache. Feature extraction uses a separate cache-free forward through Gemma's base model, which exposes `last_hidden_state` directly and avoids retaining every layer.
 

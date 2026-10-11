@@ -1,0 +1,34 @@
+{
+  "verified_date": "2026-10-11",
+  "scope": "Clean tracked-source export with current installation fixes and a new virtual environment; dependency download cache reused",
+  "platform": "macOS arm64",
+  "python": "3.12.13",
+  "uv": "0.11.6",
+  "install_command": "uv sync --frozen --python 3.12 --extra dev --extra data --extra cloud",
+  "install_passed": true,
+  "installed_packages": 92,
+  "compatibility_command": "uv pip check",
+  "compatibility_passed": true,
+  "test_command": "uv run --frozen --no-sync pytest -q",
+  "tests_passed": 25,
+  "test_seconds": 22.11,
+  "gate_command": "uv run --frozen --no-sync python scripts/gate_demo.py",
+  "gate_authorized": {
+    "allow": true,
+    "veto": false,
+    "timeout": false,
+    "malformed": false,
+    "crash": false,
+    "early_exit": false
+  },
+  "cli_help_passed": ["scripts/train.py", "scripts/prepare_cache.py", "scripts/demo.py"],
+  "optional_imports_passed": ["lerobot.datasets.lerobot_dataset.LeRobotDataset", "modal"],
+  "lock_check_passed": true,
+  "dependency_versions_changed": false,
+  "fixes": [
+    "Document HTTPS clone and repository-root working directory",
+    "Regenerate requirements export headers without development-workspace paths",
+    "Enable Hatchling allow-direct-references for the pinned ZEOS Git dependency"
+  ],
+  "gpu_training_or_inference_repeated": false
+}

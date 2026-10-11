@@ -25,15 +25,29 @@ ZEOS source was inspected before implementing the adapter, including its remote-
 
 ## Install and test
 
-Python 3.12 is required by the pinned ZEOS source. `uv.lock` fixes transitive versions as well as the explicitly pinned packages. No modifications to ZEOS or Gemma are required.
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and Git first. Python 3.12 is required by the pinned ZEOS source; uv can install it with the command below. The locked environments support Linux x86_64 and macOS arm64. GPU inference requires a supported NVIDIA host; CPU tests and the gate-only demo can run on either platform.
+
+Start from a fresh clone, then run all subsequent commands from the repository root (the directory containing `pyproject.toml`). `uv.lock` fixes transitive versions as well as the explicitly pinned packages. ZEOS is fetched from its public GitHub repository at the pinned commit; no separate local ZEOS checkout is required.
 
 ```bash
-uv sync --frozen --extra dev --extra data --extra cloud
-uv run pytest -q
-uv run python scripts/gate_demo.py
+git clone https://github.com/thehanazhang/zeos-gated-vla-prototype.git
+cd zeos-gated-vla-prototype
+uv python install 3.12
+uv sync --frozen --python 3.12 --extra dev --extra data --extra cloud
+uv run --frozen --no-sync pytest -q
+uv run --frozen --no-sync python scripts/gate_demo.py
 ```
 
 The gate-only demo uses an authored semantic command and the real kernel. It is independent of Gemma downloads and is explicitly not an end-to-end learned-policy demonstration. Offline tests include a genuine tiny random Gemma4 multimodal model to check the Transformers contract, not a substitute for verifying the pretrained E4B weights.
+
+The install command was verified in a fresh Python 3.12 environment on macOS arm64 with all three extras, 25 passing tests and the real ZEOS gate demo. See [installation verification](reports/install-verification.json).
+
+The requirements files are dependency exports used by the Modal images; the commands below regenerate them from the repository root. They omit the project itself because the images copy `src/` separately. For local use, `uv sync` above installs both the project and its dependencies.
+
+```bash
+uv export --frozen --no-dev --no-hashes --no-emit-project --format requirements-txt -o requirements-core.txt
+uv export --frozen --no-dev --no-hashes --no-emit-project --extra data --format requirements-txt -o requirements-data.txt
+```
 
 ## GPU stages on Modal
 

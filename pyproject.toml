@@ -19,6 +19,8 @@ dev = ["pytest==8.4.2", "ruff==0.16.5"]
 cloud = ["modal==1.4.3"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+[tool.hatch.metadata]
+allow-direct-references = true
 [tool.hatch.build.targets.wheel]
 packages = ["src/zeos_vla"]
 [tool.uv]

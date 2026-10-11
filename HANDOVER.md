@@ -13,8 +13,10 @@ Updated 11 October 2026. Continue this project from the repository and evidence 
 
 ## Repository and completed milestone
 
-Private remote: https://github.com/thehanazhang/zeos-gated-vla-prototype
-Verified milestone commit: `c0a0b2a` (pushed). Local repository is this directory (`outputs/zeos-vla`). Scratch work is outside it in the thread's `work/` directory.
+Public remote (made public by the user): https://github.com/thehanazhang/zeos-gated-vla-prototype
+Verified milestone commit: `c0a0b2a` (pushed). Run installation, exports and scripts from the repository root containing `pyproject.toml`, regardless of where the repository was cloned. The README includes clone/CD steps and the requirements exports use repository-relative paths. Scratch paths from the original development workspace are not installation prerequisites.
+
+Installation was rechecked from a clean source export in a fresh virtual environment after enabling Hatchling's direct-reference metadata setting for the pinned public ZEOS Git dependency. Full dev/data/cloud sync succeeded on macOS arm64 / Python 3.12.13; all 25 tests passed, all six gate-demo cases behaved correctly, package compatibility passed, and LeRobot/Modal imports and local CLI help checks succeeded. See `reports/install-verification.json`. Requirements exports contain no original workspace paths; the lockfile's editable `.` refers to the current repository root and is intentional. Use the GitHub noreply address for future commits.
 
 All six Modal stages passed with `google/gemma-4-E4B-it` revision `ee0ef6023621cff504d758262d4e04895a5af4a2`, Transformers 5.19.0, PyTorch 2.7.1, LeRobot 0.6.1, and ZEOS commit `36aaeafbe185530f0c33a9e049745bbb1b3ba3bd`. 25 local tests passed, including two new display-mapping checks. The previous Gemma 3 HTTP 403 is historical, not a current blocker.
 
